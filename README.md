@@ -60,7 +60,8 @@ console.warn(validation);
 ```
 
 ## Aktivácia / deaktivácia Foxentry funkcionality
-V niektorých prípadoch je potrebné po načítaní webovej stránky celé Foxentry reštartovať, napr. v prípade, ak sa formulár, na ktorého inputy sa má Foxentry aktivovať, nenachádza na stránke (v HTML kóde) v čase spustenia Foxentry (po načítaní stránky). Foxentry momentálne **nepodporuje automatickú inicializáciu funkcionality na inputoch pridaných po svojom spustení**, preto je potrebné ho reštartovať pomocou deaktivácie a následnej aktivácie.
+Foxentry je možné v prípade potreby deaktivovať a neskôr znova aktivovať pomocou javascriptu.
+~~V niektorých prípadoch je potrebné po načítaní webovej stránky celé Foxentry reštartovať, napr. v prípade, ak sa formulár, na ktorého inputy sa má Foxentry aktivovať, nenachádza na stránke (v HTML kóde) v čase spustenia Foxentry (po načítaní stránky). Foxentry momentálne **nepodporuje automatickú inicializáciu funkcionality na inputoch pridaných po svojom spustení**, preto je potrebné ho reštartovať pomocou deaktivácie a následnej aktivácie.~~
 
 **Upozornenie:** Deaktivácia Foxentry má vplyv iba na našeptávanie/validáciu údajov priamo vo formulári. Nemá vplyv na API metódy (popísané nižšie), ktoré sú dostupné aj po deaktivácii.
 
