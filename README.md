@@ -89,6 +89,29 @@ function onFoxentryProjectLoad(){
 ```
 Foxentry funkcionalita v sebe obsahuje 5 typov validátorov a preto je dostupný callback pre každý z nich: address, company, email, name, phone.
 
+## Vyhľadávanie adresného bodu (MOMENTÁLNE NEDOSTUPNÉ)
+
+Umožňuje vyhľadávať v databáze adries rovnakým spôsobom, ako pri bežnom zadávaní znakov do inputu užívateľom. Vo výstupe dostanete vyhovujúce výsledky podľa Foxentry algoritmu, teda najprv vyhovujúce ulice a až následne konkrétne adresné body, rovnako ako pri bežnom Foxentry našeptávači, ktorý inicializuje priamo užívateľ zadávaním znakov do inputov s adresou.
+
+**Parametre**
+- **query** - obsahuje zoznam informácií, ktorým musia výsledky vyhovovať, pričom podporované sú:
+  - **searchType** - typ údaju, na základe ktorého chcete vyhľadávať. Určuje v podstate input, do ktorého užívateľ práve zadáva údaje a ku ktorému chcete získať zoznam vyhovujúcich adries. 
+  - **street** - ulica
+  - **number** - číslo orientačné/popisné
+  - **city** - mesto
+  - **zip** - PSČ
+  - **streetWithNumber** - kombinácia názvu ulice a čísla orientačného/popisného
+  - **country** - kód štátu (cz, sk),
+- **options** - object s nastaveniami validácie (ak nie je zadaný alebo je prázdny, všetky nastavenia sa preberú z nastavení vášho projektu na app.foxentry.cz):
+  - **limits** :
+    - **results** - celkový počet položiek, ktoré požadujete
+    - **resultsPersonalized** - počet výsledkov z celkového počtu, ktoré majú pochádzať z histórie užívateľa (užívateľ už tieto adresy aspoň raz použil)	
+  - **addressCityExtended** - určuje, v akom formáte má byť názov mesta vo výstupe. V prípade hodnoty *false* bude názov mesta napr. "Praha 3", v prípade hodnoty *true* bude názov mesta napr. "Praha 3 - Žižkov"
+  - **zipFormat** - určuje, v akom formáte má byť PSČ vo výstupe. Dostupné sú hodnoty *default* (PSČ bez medzier) alebo *spaced* (PSČ s medzerou medzi 3. a 4. číslicou)
+  - **countrySelectMode** - určuje spôsob práce s "country" parametrom, ak je súčasťou dotazu. Hodnotu "limit" obmedzí výsledky iba na zadanú krajinu (cz, sk) a hodnota "prefer" spôsobí iba uprednostňovanie výsledkov z danej krajiny (nevylúči výsledky z iných krajín, iba ich odsunie na nižšie pozície)
+  - **useGeolocation** - určuje, či sa má pri radení výsledkov brať do úvahy poloha užívateľa
+- **callback** - funkcia (metóda), ktorá bude spracúvať výstup z validátora. Validátor túto metódu zavolá po validácii a vloží do nej stav validácie ako jej prvý parameter
+
 ## Validácia adresného bodu
 Umožňuje overiť, či zadaná adresa existuje.
 
