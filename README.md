@@ -112,6 +112,26 @@ Umožňuje vyhľadávať v databáze adries rovnakým spôsobom, ako pri bežnom
   - **useGeolocation** - určuje, či sa má pri radení výsledkov brať do úvahy poloha užívateľa
 - **callback** - funkcia (metóda), ktorá bude spracúvať výstup z našeptávača. Našeptávač túto metódu zavolá a vloží do nej objekt so zoznamom výsledkov (vyhovujúcich adries).
 
+### Požiadavka
+```
+function addressSearchHandler(apiResponse) {
+  console.warn(apiResponse.data);
+}
+
+Foxentry.api.address.search(
+  {
+    streetWithNumber : "Jeseniova 55",
+    city : "Praha"
+  },
+  { 
+    addressCityExtended: true,
+    zipFormat: "spaced",
+    countrySelectMode : "prefer"
+  }, 
+  addressSearchHandler  
+);
+```
+
 ## Validácia adresného bodu
 Umožňuje overiť, či zadaná adresa existuje.
 
