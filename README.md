@@ -95,7 +95,7 @@ Umožňuje vyhľadávať v databáze adries rovnakým spôsobom, ako pri bežnom
 
 **Parametre**
 - **query** - obsahuje zoznam informácií, ktorým musia výsledky vyhovovať, pričom podporované sú:
-  - **searchType** - typ údaju, na základe ktorého chcete vyhľadávať. Určuje v podstate input, do ktorého užívateľ práve zadáva údaje a ku ktorému chcete získať zoznam vyhovujúcich adries. 
+  - **searchType** - typ údaju, na základe ktorého chcete vyhľadávať. Určuje v podstate input, do ktorého užívateľ práve zadáva údaje a ku ktorému chcete získať zoznam vyhovujúcich adries. Možné hodnoty: street, number, streetWithNumber, city, zip.
   - **street** - ulica
   - **number** - číslo orientačné/popisné
   - **city** - mesto
@@ -110,7 +110,7 @@ Umožňuje vyhľadávať v databáze adries rovnakým spôsobom, ako pri bežnom
   - **zipFormat** - určuje, v akom formáte má byť PSČ vo výstupe. Dostupné sú hodnoty *default* (PSČ bez medzier) alebo *spaced* (PSČ s medzerou medzi 3. a 4. číslicou)
   - **countrySelectMode** - určuje spôsob práce s "country" parametrom, ak je súčasťou dotazu. Hodnotu "limit" obmedzí výsledky iba na zadanú krajinu (cz, sk) a hodnota "prefer" spôsobí iba uprednostňovanie výsledkov z danej krajiny (nevylúči výsledky z iných krajín, iba ich odsunie na nižšie pozície)
   - **useGeolocation** - určuje, či sa má pri radení výsledkov brať do úvahy poloha užívateľa
-- **callback** - funkcia (metóda), ktorá bude spracúvať výstup z validátora. Validátor túto metódu zavolá po validácii a vloží do nej stav validácie ako jej prvý parameter
+- **callback** - funkcia (metóda), ktorá bude spracúvať výstup z našeptávača. Našeptávač túto metódu zavolá a vloží do nej objekt so zoznamom výsledkov (vyhovujúcich adries).
 
 ## Validácia adresného bodu
 Umožňuje overiť, či zadaná adresa existuje.
