@@ -120,6 +120,7 @@ function addressSearchHandler(apiResponse) {
 
 Foxentry.api.address.search(
   {
+    searchType : "streetWithNumber",
     streetWithNumber : "Jeseniova 55",
     city : "Praha"
   },
