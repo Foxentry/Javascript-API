@@ -89,7 +89,7 @@ function onFoxentryProjectLoad(){
 ```
 Foxentry funkcionalita v sebe obsahuje 5 typov validátorov a preto je dostupný callback pre každý z nich: address, company, email, name, phone.
 
-## Vyhľadávanie adresného bodu (MOMENTÁLNE NEDOSTUPNÉ)
+## Vyhľadávanie adresného bodu
 
 Umožňuje vyhľadávať v databáze adries rovnakým spôsobom, ako pri bežnom zadávaní znakov do inputu užívateľom. Vo výstupe dostanete vyhovujúce výsledky podľa Foxentry algoritmu, teda najprv vyhovujúce ulice a až následne konkrétne adresné body, rovnako ako pri bežnom Foxentry našeptávači, ktorý inicializuje priamo užívateľ zadávaním znakov do inputov s adresou.
 
