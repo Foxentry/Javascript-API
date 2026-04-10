@@ -60,6 +60,7 @@ await Foxentry.validate(form);
 Foxentry.validate("#orderForm").then(function () {
   console.warn("Validation complete");
 });
+```
 
 ## Retrieving the Current Validation Status
 
