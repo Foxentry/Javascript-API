@@ -1,3 +1,5 @@
+# Foxentry Javascript API v2
+
 The latest version of the library, compatible with the new application [app.foxentry.com](https://app.foxentry.com/).
 
 - [Back to the index](../README.md)
