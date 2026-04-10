@@ -249,8 +249,9 @@ In v2, `onFoxentryProjectLoad()` remains available, but callbacks must be regist
 ```javascript
 function onFoxentryProjectLoad() {
   FoxentryBuilder.setCallbacks({
-    address: function (validatorResponse) {
-      console.warn(validatorResponse);
+    address: function (data, validatorInfo) {
+      console.warn(data);
+      console.warn(validatorInfo);
     }
   });
 }
@@ -272,17 +273,17 @@ function onFoxentryProjectLoad() {
 }
 ```
 
-### 2. Change to the callback signature
+### 2. Change in both callback argument formats
 
-In v1, the callback typically accepted a single argument (e.g., `validatorResponse`).
-In v2, the callback accepts two arguments:
+In v1, the callback also accepted two arguments (`data`, `validatorInfo`).
+In v2, the callback still uses two arguments, but both argument formats are new:
 
 ```typescript
 (input: HTMLElement, validation: ValidationCallbackValidationArgument) => unknown
 ```
 
-- `input` - the input element on which validation was performed
-- `validation.group` - the result of the validation group (`isValid`, `isLoading`, `validatorType`, `inputs`)
+- `input` - the first argument is now the validated DOM element (`HTMLElement`) (in v1 the first argument was `data`)
+- `validation.group` - the second argument is now wrapped in `ValidationCallbackValidationArgument` (in v1 it was `validatorInfo`)
 
 ### 3. Change in validator name: `address` -> `location`
 
@@ -291,8 +292,9 @@ If you use a callback for `address` in v1, you need to use the `location` key in
 #### v1
 ```javascript
 FoxentryBuilder.setCallbacks({
-  address: function (validatorResponse) {
-    console.warn(validatorResponse);
+  address: function (data, validatorInfo) {
+    console.warn(data);
+    console.warn(validatorInfo);
   }
 });
 ```
@@ -314,7 +316,6 @@ Foxentry.setCallbacks({
 
 1. You can keep the `onFoxentryProjectLoad()` function; the library will also call it in v2 after loading.
 2. Inside `onFoxentryProjectLoad()`, replace `FoxentryBuilder.setCallbacks(...)` with `Foxentry.setCallbacks(...)`.
-3. Update the callbacks to the signature `(input, validation)`.
-4. In the callback code, switch from the original `validatorResponse` to `validation.group`.
-5. Rename the `address` callback key to `location`.
-6. After making the changes, verify the behavior by calling `await Foxentry.validate(...)` and checking the result via `Foxentry.getValidationStatus(...)`.
+3. Update data handling in callback code: the first argument is now a DOM element and the second argument exposes results via `validation.group`.
+4. Rename the `address` callback key to `location`.
+5. After making the changes, verify the behavior by calling `await Foxentry.validate(...)` and checking the result via `Foxentry.getValidationStatus(...)`.
