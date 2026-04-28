@@ -193,11 +193,11 @@ export interface GroupValidationInfo {
 
 První argument callbacku `input` obsahuje referenci na input, nad kterým validace proběhla. Druhý argument `validation` obsahuje objekt typu `ValidationCallbackValidationArgument`, ve kterém je okamžitý stav inputů dostupný v atributu `group` a odpověď z API v atributu `response`.
 
-Formát `ApiResponse` v této dokumentaci dále nepopisujeme. Najdete ho na webu foxentry.dev v dokumentaci API verze 2.1.
+Formát `ApiResponse` v této dokumentaci dále nepopisujeme. Najdete ho na webu [foxentry.dev](https://foxentry.dev) v dokumentaci API verze 2.1.
 
 #### Popis atributů ValidationCallbackValidationArgument
 - `group` - detail validační skupiny, do které patří právě validovaný input; reprezentuje okamžitý stav inputů ve formuláři ve zpracovatelné podobě
-- `response` - odpověď z API; její formát je popsán na foxentry.dev v dokumentaci API verze 2.1
+- `response` - odpověď z API; její formát je popsán na [foxentry.dev](https://foxentry.dev) v dokumentaci API verze 2.1
 
 #### Popis atributů GroupValidationInfo
 - `isValid` - informace, zda je skupina inputů aktuálně vyhodnocena jako validní
@@ -294,7 +294,7 @@ Ve v2 callback nadále používá dva argumenty, ale oba mají nový formát:
 
 - `input` - první argument je nyní přímo DOM element (`HTMLElement`) validovaného inputu (ve v1 byl první argument `data`)
 - `validation.group` - druhý argument nyní obsahuje atribut `group`, který reprezentuje okamžitý stav inputů ve formuláři ve zpracovatelné podobě
-- `validation.response` - druhý argument nově obsahuje také atribut `response`, který reprezentuje odpověď z API; její formát najdete na foxentry.dev v dokumentaci API verze 2.1
+- `validation.response` - druhý argument nově obsahuje také atribut `response`, který reprezentuje odpověď z API; její formát najdete na [foxentry.dev](https://foxentry.dev) v dokumentaci API verze 2.1
 
 Názvy argumentů si můžete ponechat i původní (`data`, `validatorInfo`). Důležité je upravit práci s jejich obsahem podle formátu v2.
 

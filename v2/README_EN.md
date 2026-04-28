@@ -193,11 +193,11 @@ export interface GroupValidationInfo {
 
 The first argument of the `input` callback contains a reference to the input field that was validated. The second argument, `validation`, contains an object of type `ValidationCallbackValidationArgument`, where the immediate state of the form inputs is available in the `group` attribute and the API response is available in the `response` attribute.
 
-The `ApiResponse` format is not described further in this documentation. You can find it on foxentry.dev in the API version 2.1 documentation.
+The `ApiResponse` format is not described further in this documentation. You can find it on [foxentry.dev](https://foxentry.dev) in the API version 2.1 documentation.
 
 #### Description of ValidationCallbackValidationArgument Attributes
 - `group` - details of the validation group to which the currently validated input belongs; represents the immediate state of the form inputs in a processable structure
-- `response` - the API response; its format is described on foxentry.dev in the API version 2.1 documentation
+- `response` - the API response; its format is described on [foxentry.dev](https://foxentry.dev) in the API version 2.1 documentation
 
 #### Description of GroupValidationInfo Attributes
 - `isValid` - indicates whether the group of inputs is currently evaluated as valid
@@ -294,7 +294,7 @@ In v2, the callback still uses two arguments, but both argument formats are new:
 
 - `input` - the first argument is now the validated DOM element (`HTMLElement`) (in v1 the first argument was `data`)
 - `validation.group` - the second argument now includes a `group` attribute that represents the immediate state of the form inputs in a processable structure
-- `validation.response` - the second argument now also includes a `response` attribute that represents the API response; its format is described on foxentry.dev in the API version 2.1 documentation
+- `validation.response` - the second argument now also includes a `response` attribute that represents the API response; its format is described on [foxentry.dev](https://foxentry.dev) in the API version 2.1 documentation
 
 ### 3. Change in validator name: `address` -> `location`
 
