@@ -85,6 +85,7 @@ console.warn(status.inputs);
 #### Typ návratové hodnoty
 ```typescript
 export interface InputValidationInfo {
+  type: string;
   isValid: boolean;
   isLoading: boolean;
   mark: 'valid' | 'invalid' | 'alert' | null;
@@ -105,6 +106,7 @@ export interface InputsValidationStatus {
 - `isLoading` - informace, zda u některého ze zahrnutých inputů právě probíhá validace
 
 #### Popis atributů InputValidationInfo
+- `type` - namapovaný typ inputu
 - `isValid` - informace, zda je konkrétní input aktuálně vyhodnocen jako validní
 - `isLoading` - informace, zda u konkrétního inputu právě probíhá validace
 - `mark` - stav inputu; může nabývat hodnot `valid`, `invalid`, `alert` nebo `null`, pokud není nastavena žádná značka
@@ -116,6 +118,7 @@ export interface InputsValidationStatus {
 {
   "inputs": [
     {
+      "type": "street",
       "isValid": true,
       "isLoading": false,
       "mark": "valid",
@@ -123,6 +126,7 @@ export interface InputsValidationStatus {
       "ref": "HTMLElement"
     },
     {
+      "type": "streetWithNumber",
       "isValid": false,
       "isLoading": false,
       "mark": "invalid",
@@ -176,6 +180,7 @@ export type FoxentryCallbacksType = {
 
 export interface ValidationCallbackValidationArgument {
   group: GroupValidationInfo;
+  response: ApiResponse;
 }
 
 export interface GroupValidationInfo {
@@ -186,10 +191,13 @@ export interface GroupValidationInfo {
 }
 ```
 
-První argument callbacku `input` obsahuje referenci na input, nad kterým validace proběhla. Druhý argument `validation` obsahuje objekt typu `ValidationCallbackValidationArgument`, ve kterém je výsledek validace dostupný v atributu `group`.
+První argument callbacku `input` obsahuje referenci na input, nad kterým validace proběhla. Druhý argument `validation` obsahuje objekt typu `ValidationCallbackValidationArgument`, ve kterém je okamžitý stav inputů dostupný v atributu `group` a odpověď z API v atributu `response`.
+
+Formát `ApiResponse` v této dokumentaci dále nepopisujeme. Najdete ho na webu foxentry.dev v dokumentaci API verze 2.1.
 
 #### Popis atributů ValidationCallbackValidationArgument
-- `group` - detail validační skupiny, do které patří právě validovaný input
+- `group` - detail validační skupiny, do které patří právě validovaný input; reprezentuje okamžitý stav inputů ve formuláři ve zpracovatelné podobě
+- `response` - odpověď z API; její formát je popsán na foxentry.dev v dokumentaci API verze 2.1
 
 #### Popis atributů GroupValidationInfo
 - `isValid` - informace, zda je skupina inputů aktuálně vyhodnocena jako validní
@@ -212,12 +220,14 @@ function onFoxentryProjectLoad() {
   function emailCallback(input, validation) {
     console.warn("Email input:", input);
     console.warn("Výsledek validace skupiny:", validation.group);
+    console.warn("API odpověď:", validation.response);
   }
 
   function phoneCallback(input, validation) {
     console.warn("Telefonní input:", input);
     console.warn("Typ validátoru:", validation.group.validatorType);
     console.warn("Validované inputy:", validation.group.inputs);
+    console.warn("API odpověď:", validation.response);
   }
 
   Foxentry.setCallbacks({
@@ -283,7 +293,8 @@ Ve v2 callback nadále používá dva argumenty, ale oba mají nový formát:
 ```
 
 - `input` - první argument je nyní přímo DOM element (`HTMLElement`) validovaného inputu (ve v1 byl první argument `data`)
-- `validation.group` - druhý argument je nyní objekt typu `ValidationCallbackValidationArgument` (ve v1 to byl `validatorInfo`)
+- `validation.group` - druhý argument nyní obsahuje atribut `group`, který reprezentuje okamžitý stav inputů ve formuláři ve zpracovatelné podobě
+- `validation.response` - druhý argument nově obsahuje také atribut `response`, který reprezentuje odpověď z API; její formát najdete na foxentry.dev v dokumentaci API verze 2.1
 
 Názvy argumentů si můžete ponechat i původní (`data`, `validatorInfo`). Důležité je upravit práci s jejich obsahem podle formátu v2.
 
@@ -318,6 +329,6 @@ Foxentry.setCallbacks({
 
 1. Funkci `onFoxentryProjectLoad()` můžete zachovat; knihovna ji ve v2 po načtení také zavolá.
 2. Uvnitř `onFoxentryProjectLoad()` nahraďte `FoxentryBuilder.setCallbacks(...)` za `Foxentry.setCallbacks(...)`.
-3. Upravte práci s daty: první argument je DOM element a druhý argument je objekt, jehož výsledek je v `validation.group`.
+3. Upravte práci s daty: první argument je DOM element a druhý argument je objekt, který nyní obsahuje `validation.group` i `validation.response`.
 4. Přejmenujte callback klíč `address` na `location`.
 5. Po změnách ověřte chování voláním `await Foxentry.validate(...)` a kontrolou přes `Foxentry.getValidationStatus(...)`.

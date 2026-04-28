@@ -85,6 +85,7 @@ console.warn(status.inputs);
 #### Return type
 ```typescript
 export interface InputValidationInfo {
+  type: string;
   isValid: boolean;
   isLoading: boolean;
   mark: 'valid' | 'invalid' | 'alert' | null;
@@ -105,6 +106,7 @@ export interface InputsValidationStatus {
 - `isLoading` - indicates whether validation is currently in progress for any of the included inputs
 
 #### Description of InputValidationInfo attributes
+- `type` - the mapped input type
 - `isValid` - indicates whether a specific input is currently evaluated as valid
 - `isLoading` - indicates whether validation is currently in progress for a specific input
 - `mark` - the input's state; can take the values `valid`, `invalid`, `alert`, or `null` if no flag is set
@@ -116,6 +118,7 @@ export interface InputsValidationStatus {
 {
   "inputs": [
     {
+      "type": "street",
       "isValid": true,
       "isLoading": false,
       "mark": "valid",
@@ -123,6 +126,7 @@ export interface InputsValidationStatus {
       "ref": "HTMLElement"
     },
     {
+      "type": "streetWithNumber",
       "isValid": false,
       "isLoading": false,
       "mark": "invalid",
@@ -176,6 +180,7 @@ export type FoxentryCallbacksType = {
 
 export interface ValidationCallbackValidationArgument {
   group: GroupValidationInfo;
+  response: ApiResponse;
 }
 
 export interface GroupValidationInfo {
@@ -186,10 +191,13 @@ export interface GroupValidationInfo {
 }
 ```
 
-The first argument of the `input` callback contains a reference to the input field that was validated. The second argument, `validation`, contains an object of type `ValidationCallbackValidationArgument`, in which the validation result is available in the `group` attribute.
+The first argument of the `input` callback contains a reference to the input field that was validated. The second argument, `validation`, contains an object of type `ValidationCallbackValidationArgument`, where the immediate state of the form inputs is available in the `group` attribute and the API response is available in the `response` attribute.
+
+The `ApiResponse` format is not described further in this documentation. You can find it on foxentry.dev in the API version 2.1 documentation.
 
 #### Description of ValidationCallbackValidationArgument Attributes
-- `group` - details of the validation group to which the currently validated input belongs
+- `group` - details of the validation group to which the currently validated input belongs; represents the immediate state of the form inputs in a processable structure
+- `response` - the API response; its format is described on foxentry.dev in the API version 2.1 documentation
 
 #### Description of GroupValidationInfo Attributes
 - `isValid` - indicates whether the group of inputs is currently evaluated as valid
@@ -212,12 +220,14 @@ function onFoxentryProjectLoad() {
   function emailCallback(input, validation) {
     console.warn("Email input:", input);
     console.warn("Validation group result:", validation.group);
+    console.warn("API response:", validation.response);
   }
 
   function phoneCallback(input, validation) {
     console.warn("Phone input:", input);
     console.warn("Validator type:", validation.group.validatorType);
     console.warn("Validated inputs:", validation.group.inputs);
+    console.warn("API response:", validation.response);
   }
 
   Foxentry.setCallbacks({
@@ -283,7 +293,8 @@ In v2, the callback still uses two arguments, but both argument formats are new:
 ```
 
 - `input` - the first argument is now the validated DOM element (`HTMLElement`) (in v1 the first argument was `data`)
-- `validation.group` - the second argument is now wrapped in `ValidationCallbackValidationArgument` (in v1 it was `validatorInfo`)
+- `validation.group` - the second argument now includes a `group` attribute that represents the immediate state of the form inputs in a processable structure
+- `validation.response` - the second argument now also includes a `response` attribute that represents the API response; its format is described on foxentry.dev in the API version 2.1 documentation
 
 ### 3. Change in validator name: `address` -> `location`
 
@@ -316,6 +327,6 @@ Foxentry.setCallbacks({
 
 1. You can keep the `onFoxentryProjectLoad()` function; the library will also call it in v2 after loading.
 2. Inside `onFoxentryProjectLoad()`, replace `FoxentryBuilder.setCallbacks(...)` with `Foxentry.setCallbacks(...)`.
-3. Update data handling in callback code: the first argument is now a DOM element and the second argument exposes results via `validation.group`.
+3. Update data handling in callback code: the first argument is now a DOM element and the second argument now exposes both `validation.group` and `validation.response`.
 4. Rename the `address` callback key to `location`.
 5. After making the changes, verify the behavior by calling `await Foxentry.validate(...)` and checking the result via `Foxentry.getValidationStatus(...)`.
