@@ -20,5 +20,3 @@ Current version of the library, compatible with the new application [app.foxentr
 
 - [Open v2 documentation](v2/README_EN.md)
 - The v2 documentation also includes a migration guide from v1.
-
-DEV
